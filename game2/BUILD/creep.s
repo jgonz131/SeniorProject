@@ -21,7 +21,6 @@
 	.import		_ppu_on_all
 	.import		_oam_clear
 	.import		_oam_spr
-	.import		_oam_meta_spr
 	.import		_music_play
 	.import		_pad_poll
 	.import		_pad_trigger
@@ -69,7 +68,6 @@
 	.export		_winscreen
 	.export		_losescreen
 	.export		_palette5
-	.export		_CatThing
 	.export		_song
 	.export		_pad
 	.export		_game_lives
@@ -2876,48 +2874,6 @@ _palette5:
 	.byte	$00
 	.byte	$00
 	.byte	$00
-_CatThing:
-	.byte	$F8
-	.byte	$F8
-	.byte	$08
-	.byte	$02
-	.byte	$00
-	.byte	$F8
-	.byte	$09
-	.byte	$02
-	.byte	$F8
-	.byte	$00
-	.byte	$18
-	.byte	$02
-	.byte	$00
-	.byte	$00
-	.byte	$19
-	.byte	$02
-	.byte	$08
-	.byte	$00
-	.byte	$1A
-	.byte	$02
-	.byte	$08
-	.byte	$F8
-	.byte	$0A
-	.byte	$02
-	.byte	$F8
-	.byte	$08
-	.byte	$28
-	.byte	$02
-	.byte	$00
-	.byte	$08
-	.byte	$29
-	.byte	$02
-	.byte	$F8
-	.byte	$10
-	.byte	$38
-	.byte	$02
-	.byte	$00
-	.byte	$10
-	.byte	$39
-	.byte	$02
-	.byte	$80
 
 .segment	"BSS"
 
@@ -3887,22 +3843,6 @@ L0002:	jsr     _ppu_wait_nmi
 ; test1();
 ;
 	jsr     _test1
-;
-; oam_meta_spr(Snake1.x, Snake1.y,0, CatThing);
-;
-	jsr     decsp3
-	lda     _Snake1
-	ldy     #$02
-	sta     (sp),y
-	lda     _Snake1+1
-	dey
-	sta     (sp),y
-	lda     #$00
-	dey
-	sta     (sp),y
-	lda     #<(_CatThing)
-	ldx     #>(_CatThing)
-	jsr     _oam_meta_spr
 ;
 ; if(Snake1.size == 1) {
 ;

@@ -24,42 +24,6 @@ extern const byte palette2[16];
 extern const byte winscreen[565];
 extern const byte losescreen[623];
 
-const unsigned char runlb[]={
-	- 8,- 8,0x08,1,
-	  0,- 8,0x09,1,
-	- 8,  0,0x18,1,
-	  0,  0,0x19,1,
-	128
-};
-
-const unsigned char runmid[]={
-	- 8,- 8,0x08,1,
-	  0,- 8,0x09,1,
-	- 8,  0,0x0a,1,
-	  0,  0,0x0b,1,
-	128
-};
-
-const unsigned char runrf[]={
-	- 8,- 8,0x08,1,
-	  0,- 8,0x09,1,
-	- 8,  0,0x0c,1,
-	  0,  0,0x0d,1,
-	128
-};
-struct Hero {
-	unsigned int x; // low byte is sub-pixel
-	unsigned int y;
-	signed int vel_x; // speed, signed, low byte is sub-pixel
-	signed int vel_y;
-};
-
-struct Hero Cat1 = {0x4000,0xc400};
-
-
-
-
-
 //system vars used everywhere as well
 unsigned char song, k, pad, game_lives, s, bn;
 
@@ -157,15 +121,14 @@ void game_loop(void) {
 	
 	while(1) {
 		
-		ppu_wait_nmi(); 0
-		//pad1 = pad_poll(0); // read the first controller
+		ppu_wait_nmi(); 
+		pad1 = pad_poll(0); // read the first controller
 		movement();
 		
 		draw_sprites();
 		mouse1.respawn=1;
 		draw_mouse();
 		test1();
-		
 		
 		if(Snake1.size == 1) {
 			updateListData[6]=0x31;
